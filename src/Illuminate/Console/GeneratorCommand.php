@@ -8,6 +8,13 @@ abstract class GeneratorCommand extends Command {
 	use AppNamespaceDetectorTrait;
 
 	/**
+	 * The default method name.
+	 *
+	 * @var string
+	 */
+	protected $defaultMethod = 'handle';
+
+	/**
 	 * The filesystem instance.
 	 *
 	 * @var \Illuminate\Filesystem\Filesystem
@@ -20,6 +27,7 @@ abstract class GeneratorCommand extends Command {
 	 * @var string
 	 */
 	protected $type;
+
 
 	/**
 	 * Create a new controller creator command instance.
@@ -83,6 +91,8 @@ abstract class GeneratorCommand extends Command {
 	 */
 	protected function parseName($name)
 	{
+		$name = strtok($name, '@');
+
 		$rootNamespace = $this->getAppNamespace();
 
 		if (starts_with($name, $rootNamespace))
@@ -91,6 +101,24 @@ abstract class GeneratorCommand extends Command {
 		}
 
 		return $this->parseName($this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name);
+	}
+
+	/**
+	 * Get the method for the given name.
+	 *
+	 * @param $name
+	 * @return string
+	 */
+	protected function getMethodName($name)
+	{
+		$position = strrpos($name, '@');
+
+		if($position === false)
+		{
+			return $this->defaultMethod;
+		}
+
+		return substr($name, $position + 1);
 	}
 
 	/**

@@ -51,6 +51,12 @@ class HandlerEventCommand extends GeneratorCommand {
 			'{{fullEvent}}', $event, $stub
 		);
 
+		$method = $this->getMethodName($this->getNameInput());
+
+		$stub = str_replace(
+			'{{method}}', $method, $stub
+		);
+
 		return $stub;
 	}
 

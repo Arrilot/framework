@@ -23,7 +23,7 @@ class {{class}} {
 	 * @param  {{event}}  $event
 	 * @return void
 	 */
-	public function handle({{event}} $event)
+	public function {{method}}({{event}} $event)
 	{
 		//
 	}
