@@ -9,8 +9,6 @@ use Symfony\Component\Console\Input\InputArgument;
 
 class AppNameCommand extends Command {
 
-	use AppNamespaceDetectorTrait;
-
 	/**
 	 * The console command name.
 	 *
@@ -68,7 +66,7 @@ class AppNameCommand extends Command {
 	 */
 	public function fire()
 	{
-		$this->currentRoot = trim($this->getAppNamespace(), '\\');
+		$this->currentRoot = trim(app()->getNamespace(), '\\');
 
 		$this->setBootstrapNamespaces();
 
